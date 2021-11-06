@@ -1,16 +1,22 @@
 {% extends 'main.html' %}
 
 {% block content %}
-<h1>List of Projects Template</h1>
-<p>
-  Lorem ipsum dolor sit amet, consectetur adipiscing 
-  elit, sed do eiusmod tempor incididunt ut labore et 
-  dolore magna aliqua. Ut enim ad minim veniam, quis 
-  nostrud exercitation ullamco laboris nisi ut aliquip 
-  ex ea commodo consequat. Duis aute irure dolor in 
-  reprehenderit in voluptate velit esse cillum dolore 
-  eu fugiat nulla pariatur. Excepteur sint occaecat 
-  cupidatat non proident, sunt in culpa qui officia 
-  deserunt mollit anim id est laborum.
-</p>
+
+{% if number > 10 %}
+<p>Number is greater than 10</p>
+{% elif number == 10 %}
+<p>Number is equal to 10</p>
+{% else %}
+<p>Number is less than 10</p>
+{% endif %}
+
+<hr />
+
+<h1>Projects</h1>
+
+<ul>
+  {% for project in projects %}
+    <li>Name: <a href="{% url 'project' project.id %}">{{project.title}}</a> --- {{project.description}}</li>
+  {% endfor %}
+</ul>
 {% endblock content %}
