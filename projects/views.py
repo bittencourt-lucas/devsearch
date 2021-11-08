@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Project
+from .forms import ProjectForm
 
 projectsList = [
     {
@@ -20,13 +21,18 @@ projectsList = [
     },
 ]
 
-def projects(request):
+def list(request):
     projects  = Project.objects.all()
     context = {'projects': projects}
     return render(request, 'projects/projects.html', context)
 
-def project(request, pk):
+def index(request, pk):
     project = Project.objects.get(id = pk)
     tags = project.tags.all()
     context = {'project': project, 'tags': tags}
     return render(request, 'projects/project.html', context)
+
+def create(request):
+    form = ProjectForm()
+    context = {'form': form}
+    return render(request, "projects/project_form.html", context)

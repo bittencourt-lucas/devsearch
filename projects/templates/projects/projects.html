@@ -1,5 +1,6 @@
-{% extends 'main.html' %} {% block content %}
+{% extends 'main.html' %}
 
+{% block content %}
 <h1>Projects</h1>
 
 <table>
@@ -16,7 +17,7 @@
     <td>{{project.title}}</td>
     <td>{{project.vote_total}}</td>
     <td>{{project.vote_ratio}}%</td>
-    <td><a href="{% url 'project' project.id %}">View</a></td>
+    <td><a href="{% url 'projects_index' project.id %}">View</a></td>
   </tr>
   {% endfor %}
 </table>
