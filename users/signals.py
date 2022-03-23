@@ -4,7 +4,7 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from .models import Profile
 
-@receiver(post_save, sender=Profile)
+@receiver(post_save, sender=User)
 def create_user(sender, instance, created, **kwargs):
     print('Profile signal triggered')
     if created:
@@ -15,6 +15,16 @@ def create_user(sender, instance, created, **kwargs):
             email=user.email,
             name=user.first_name,
         )
+
+@receiver(post_save, sender=Profile)
+def updateUser(sender, instance, created, **kwargs):
+    profile = instance
+    user = profile.user
+    if created == False:
+        user.first_name = profile.name
+        user.username = profile.username
+        user.email = profile.email
+        user.save()
 
 @receiver(post_delete, sender=Profile)
 def delete_user(sender, instance, **kwargs):
