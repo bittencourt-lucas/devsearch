@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from .models import Project
-from .forms import ProjectForm
+from .forms import ProjectForm, ReviewForm
 from .utils import search_projects, paginate_projects
 
 def list(request):
@@ -14,7 +15,19 @@ def list(request):
 def index(request, pk):
     project = Project.objects.get(id=pk)
     tags = project.tags.all()
-    context = {'project': project, 'tags': tags}
+    form = ReviewForm()
+
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        review = form.save(commit=False)
+        review.project = project
+        review.owner = request.user.profile
+        review.save()
+        project.get_vote_count
+        messages.success(request, 'Your review was successfully submitted!')
+        return redirect('projects_index', pk=project.id)
+
+    context = {'project': project, 'tags': tags, 'form': form}
     return render(request, 'projects/project.html', context)
 
 @login_required(login_url="login")
