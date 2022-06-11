@@ -1,7 +1,6 @@
 {% extends 'main.html' %}
 
 {% block content %}
-
 <!-- Main Section -->
 <main class="formPage my-xl">
   <div class="content-box">
@@ -13,13 +12,11 @@
         {% csrf_token %}
 
         {% for field in form %}
-
         <!-- Input:Text -->
         <div class="form__field">
           <label for="formInput#text">{{ field.label }}</label>
           {{ field }}
         </div>
-
         {% endfor %}
 
         <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
@@ -27,5 +24,4 @@
     </div>
   </div>
 </main>
-
 {% endblock content %}
